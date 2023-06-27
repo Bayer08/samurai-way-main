@@ -3,10 +3,15 @@
     background-color: aquamarine;
 }
 
-.item {
-    color: brown;
+.item a {
+    color: blueviolet;
+    text-decoration: none;
 }
 
-.item.active {
-    color: blue;
+.item a.active{
+    color: cornflowerblue;
 }
+
+/*.item.active {*/
+/*    color: blue;*/
+/*}*/
