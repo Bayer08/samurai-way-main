@@ -4,11 +4,15 @@ import Post from "./Post/Post";
 
 function MyPosts() {
     return (
-        <div>
-            My posts
+        <div className={classes.postsBlock}>
+            <h3>My posts</h3>
             <div>
-                <textarea></textarea>
-                <button>Add Post</button>
+                <div>
+                    <textarea></textarea>
+                </div>
+                <div>
+                    <button>Add Post</button>
+                </div>
             </div>
             <div className={classes.item}>
                 <Post massage={"HI"} likeCounts={15}/>

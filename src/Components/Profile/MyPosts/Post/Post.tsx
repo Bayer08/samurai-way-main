@@ -8,13 +8,15 @@ type propsType={
 
 function Post(props:propsType) {
     return (
+        <div className={classes.itemBlock}>
             <div className={classes.item}>
-                    <img src="https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg"/>
+                <img src="https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg"/>
                 {props.massage}
                 <div>
                     <span>Like: {props.likeCounts}</span>
                 </div>
             </div>
+        </div>
     )
 }
 
