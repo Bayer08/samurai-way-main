@@ -18,3 +18,11 @@
 .message {
 
 }
+
+.errorText {
+    border-color: red;
+}
+
+.errorMessage {
+    color: red;
+}

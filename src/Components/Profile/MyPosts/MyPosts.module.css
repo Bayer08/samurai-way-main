@@ -5,3 +5,11 @@
 .postsBlock {
     padding: 10px;
 }
+
+.errorText {
+    border-color: red;
+}
+
+.errorMessage {
+    color: red;
+}

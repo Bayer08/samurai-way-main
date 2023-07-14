@@ -1,12 +1,12 @@
 import React from "react";
 import classes from './Post.module.css';
 
-type propsType={
+type PropsType={
     massage:string
     likeCounts:number
 }
 
-function Post(props:propsType) {
+function Post(props:PropsType) {
     return (
         <div className={classes.itemBlock}>
             <div className={classes.item}>

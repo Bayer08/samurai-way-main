@@ -5,23 +5,50 @@ import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navbar/Navbar";
 import Profile from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from "react-router-dom";
+import {Route} from "react-router-dom";
 
-function App() {
+export type PostsArray = {
+    id: string,
+    message: string,
+    likesCount: number
+}
+export type DialogsArray = {
+    id: string,
+    name: string
+}
+export type MessagesArray = {
+    id: string,
+    message: string
+}
+
+
+export type PropsType = {
+    state:{
+        profilePage:{
+            posts: PostsArray[],
+            dialogs: DialogsArray[]
+        }
+        messagesPage:{
+            messages: MessagesArray[]
+        }
+    }
+}
+
+
+function App(props: PropsType) {
+    console.log(props)
     return (
-        <BrowserRouter>
-        <div className='app-wrapper'>
-            <Header/>
-            <Navbar/>
-            <div className="content">
-                <Route path="/profile" component={Profile}/>
-                <Route path="/dialogs" component={Dialogs}/>
-                {/*<Route path="/news" component={News}/>*/}
-                {/*<Route path="/music" component={Music}/>*/}
-                {/*<Route path="/settings" component={Settings}/>*/}
+            <div className='app-wrapper'>
+                <Header/>
+                <Navbar/>
+                <div className="content">
+                    <Route path="/profile" render={() => <Profile posts={props.state.profilePage.posts}/>}/>
+                    <Route path="/dialogs" render={() => <Dialogs dialogs={props.state.profilePage.dialogs} messages={props.state.messagesPage.messages}/>}/>
+                    {/*<Route path="/news" component={News}/>*/}
+                    {/*<Route path="/music" component={Music}/>*/}
+                    {/*<Route path="/settings" component={Settings}/>*/}
+                </div>
             </div>
-        </div>
-        </BrowserRouter>
     )
 }
 
