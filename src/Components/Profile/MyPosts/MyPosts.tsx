@@ -1,51 +1,48 @@
 import React, {useState} from "react";
 import classes from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {PostsArray} from "../../../App";
 import {v1} from "uuid";
+import {PostsArray} from "../../../Redax/State";
 
 type PropsType = {
     posts:Array<PostsArray>
+    // updateProfilePagePostText:(textArea:string)=>void
+    updatePostText:string
+    // addProfilePagePostText: (textArea: string) => void
+    error:string
+    // updateProfilePageError:(error: string) => void
+    dispatch:(action:string, text:string)=>void
 }
 
-
 function MyPosts(props:PropsType) {
-    let [textArea, setTextArea] = useState('')
-    let [post,setPost]=useState(props.posts)
-    let [error,setError] = useState('')
-
     const onChangeTextAreaHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setTextArea(event.currentTarget.value)
-        setError('')
+        props.dispatch('UPDATE-PROFILE-PAGE-POST-TEXT', event.currentTarget.value)
+        // props.updateProfilePagePostText(event.currentTarget.value)
+        // props.updateProfilePageError('')
     }
-    const onClickButtonHandler = () => {
-        if (textArea.trim()!=='') {
-            let currentPost = {id:v1(), message:textArea, likesCount:0}
-            let addPost=[currentPost,...post]
-            setPost(addPost)
-            setTextArea('')
-        } else {
-            setError('Field is required')
+    const onKeyPressHandler = (e:React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === "Enter") {
+            props.dispatch('ADD-PROFILE-PAGE-POST-TEXT', e.currentTarget.value)
+            // props.addProfilePagePostText(e.currentTarget.value)
+            e.currentTarget.value=''
         }
-
     }
-
-
-    let postElemnts = post.map(post=><Post massage={post.message} likeCounts={post.likesCount}/>)
-
+    console.log('error='+props.error)
+    let postElemnts = props.posts.map(post=><Post massage={post.message} likeCounts={post.likesCount}/>)
     return (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
                     <textarea
-                        className={error ? classes.errorText : ''}
-                        value={textArea}
+                        className={props.error!=='' ? classes.errorText : ''}
+                        value={props.updatePostText}
+                        onKeyDown={onKeyPressHandler}
                         onChange={(event)=>onChangeTextAreaHandler(event)}></textarea>
-                    {error ? <div className={classes.errorMessage}>{error}</div> : null}
+                    {props.error ? <div className={classes.errorMessage}>{props.error}</div> : null}
                 </div>
                 <div>
-                    <button onClick={onClickButtonHandler}>Add Post</button>
+                    <button onClick={()=>props.dispatch('ADD-PROFILE-PAGE-POST-TEXT', props.updatePostText)}>Add Post</button>
                 </div>
             </div>
             <div className={classes.item}>
@@ -54,5 +51,4 @@ function MyPosts(props:PropsType) {
         </div>
     )
 }
-
 export default MyPosts;

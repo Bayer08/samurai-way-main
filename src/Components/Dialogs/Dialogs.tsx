@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import classes from './Dialogs.module.css';
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Massage} from "./Message/Message";
-import {DialogsArray, MessagesArray} from "../../App";
+
 import {v1} from "uuid";
+import {DialogsArray, MessagesArray} from "../../Redax/State";
 
 type PropsType = {
     dialogs: Array<DialogsArray>
@@ -31,6 +32,11 @@ const Dialogs = (props:PropsType) => {
         }
 
     }
+    const onKeyPressHandler = (e:React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === "Enter") {
+            onClickButtonHandler()
+        }
+    }
 
     let dialogsElement = props.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
     let messagesElement = addMessage.map(message => <Massage message={message.message}/>)
@@ -43,6 +49,7 @@ const Dialogs = (props:PropsType) => {
                 {messagesElement}
                 <textarea onChange={(event)=>onChangeTextAreaHandler(event)}
                           value={textArea}
+                          onKeyDown={onKeyPressHandler}
                           className={error ? classes.errorText : ''}></textarea>
                 {error ? <div className={classes.errorMessage}>{error}</div> : null}
                 <div><button onClick={onClickButtonHandler}>send</button></div>
